@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.StoreItemMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.StoreItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="si_id" jdbcType="INTEGER" property="siId" />
+    <result column="si_store_id" jdbcType="INTEGER" property="siStoreId" />
+    <result column="si_category_sic_id" jdbcType="INTEGER" property="siCategorySicId" />
+    <result column="si_master_id" jdbcType="INTEGER" property="siMasterId" />
+    <result column="si_color_id" jdbcType="INTEGER" property="siColorId" />
+    <result column="si_name" jdbcType="VARCHAR" property="siName" />
+    <result column="si_description" jdbcType="VARCHAR" property="siDescription" />
+    <result column="si_picture_url" jdbcType="VARCHAR" property="siPictureUrl" />
+    <result column="si_multi_size" jdbcType="TINYINT" property="siMultiSize" />
+    <result column="si_class" jdbcType="VARCHAR" property="siClass" />
+    <result column="si_priority" jdbcType="TINYINT" property="siPriority" />
+    <result column="si_sales_volume" jdbcType="INTEGER" property="siSalesVolume" />
+    <result column="si_available" jdbcType="TINYINT" property="siAvailable" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+</mapper>
