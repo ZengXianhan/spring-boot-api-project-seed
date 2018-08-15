@@ -1,9 +1,10 @@
 package com.company.project.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-public class Item {
+public class Item implements Serializable {
     @Id
     @Column(name = "item_id")
     private Integer itemId;
