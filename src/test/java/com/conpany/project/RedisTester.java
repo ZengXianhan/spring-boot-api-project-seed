@@ -27,4 +27,15 @@ public class RedisTester extends Tester {
         List<Item> items = (List<Item>) object;
         Assert.assertEquals(itemList.size(),items.size());
     }
+
+//    @Test
+//    public void testExpiredRedis(){
+//        int id = 111111111;
+//        Item itemList = itemService.findById(id);
+//        boolean result = redisService.setValue("itemList",itemList);
+//        Assert.assertEquals(true,result);
+//        Object object = redisService.getValue("itemList");
+//        List<Item> items = (List<Item>) object;
+//        Assert.assertEquals(itemList.size(),items.size());
+//    }
 }

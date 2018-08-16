@@ -1,5 +1,6 @@
 package com.company.project.service.impl;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +32,20 @@ public class RedisService {
         return object;
     }
 
+    public Object getValue(Object model, String objID) {
+        String key = this.keyGenerator(model.getClass().getSimpleName(), objID);
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        Object object = valueOperations.get(key);
+        return object;
+    }
+
+    public Object getValues(Collection<?> collection, String modelName, String uniqueKey) {
+        String key = this.keyGenerator(collection,modelName,uniqueKey);
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        Object object = valueOperations.get(key);
+        return object;
+    }
+
     public boolean setValue(String key, Object values) {
         try {
             ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
@@ -54,11 +69,42 @@ public class RedisService {
         return true;
     }
 
-    public String keyGenerator(String modelName, Integer id) {
-        return null;
+    public boolean setValue(Object object, String objID) {
+        try {
+            String key = this.keyGenerator(object.getClass().getSimpleName(), objID);
+            ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+            valueOperations.set(key, object);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
-    public String keyGenerator(String collectionType, String modelName) {
-        return null;
+    public boolean setValues(Collection<?> collection, String modelName, String uniqueKey) {
+        try {
+            String key = this.keyGenerator(collection, modelName, uniqueKey);
+            ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+            valueOperations.set(key, collection);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public String keyGenerator(String modelName, String modelId) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(modelName + modelId);
+        String key = sb.toString();
+        return key;
+    }
+
+    public String keyGenerator(Collection<?> collection, String modelName, String uniqueID) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(collection.getClass().getSimpleName());
+        sb.append(modelName);
+        sb.append(uniqueID);
+        return sb.toString();
     }
 }
