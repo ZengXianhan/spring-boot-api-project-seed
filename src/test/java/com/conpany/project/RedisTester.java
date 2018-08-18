@@ -28,14 +28,24 @@ public class RedisTester extends Tester {
         Assert.assertEquals(itemList.size(),items.size());
     }
 
-//    @Test
-//    public void testExpiredRedis(){
-//        int id = 111111111;
-//        Item itemList = itemService.findById(id);
-//        boolean result = redisService.setValue("itemList",itemList);
-//        Assert.assertEquals(true,result);
-//        Object object = redisService.getValue("itemList");
-//        List<Item> items = (List<Item>) object;
-//        Assert.assertEquals(itemList.size(),items.size());
-//    }
+    @Test
+    public void testExpiredRedis(){
+        int id = 10048;
+        Item item = itemService.findById(id);
+        boolean result = redisService.setValue(item, item.getItemId().toString(),5);
+        Assert.assertEquals(true,result);
+        Object object = redisService.getValue(item, item.getItemId().toString());
+        Item items = (Item) object;
+        Assert.assertEquals(items.getItemId(),item.getItemId());
+
+        try {
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        object = redisService.getValue(item, item.getItemId().toString());
+        items = (Item) object;
+        Assert.assertNull(items);
+    }
 }

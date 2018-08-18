@@ -69,11 +69,24 @@ public class RedisService {
         return true;
     }
 
-    public boolean setValue(Object object, String objID) {
+    public boolean setValue(Object object, String uniqueID) {
         try {
-            String key = this.keyGenerator(object.getClass().getSimpleName(), objID);
+            String key = this.keyGenerator(object.getClass().getSimpleName(), uniqueID);
             ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
             valueOperations.set(key, object);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean setValue(Object object, String uniqueID, int expiredTime) {
+        try {
+            String key = this.keyGenerator(object.getClass().getSimpleName(), uniqueID);
+            ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+            valueOperations.set(key, object);
+            this.redisTemplate.expire(key, expiredTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
